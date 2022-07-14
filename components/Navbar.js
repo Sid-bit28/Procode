@@ -9,7 +9,7 @@ export default function Navbar() {
         <h1>Gaming Vibes</h1>
         <ul>
           <li><Link href="/"><a>Home</a></Link></li>
-          <li><Link href="/guides"><a>Guides</a></Link></li>
+          <li><Link href="/guides"><a>Problems</a></Link></li>
         </ul>
       </nav>
       <div className="banner">
