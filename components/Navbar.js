@@ -5,11 +5,11 @@ export default function Navbar() {
   return (
     <div className="container">
       <nav>
-        <Image src="/rupee.png" width={50} height={48} />
+        <Image src="/logo.png" width={50} height={48} />
         <h1>Gaming Vibes</h1>
         <ul>
           <li><Link href="/"><a>Home</a></Link></li>
-          <li><Link href="/guides"><a>Problems</a></Link></li>
+          <li><Link href="/"><a><Problems></Problems></a></Link></li>
         </ul>
       </nav>
       <div className="banner">
