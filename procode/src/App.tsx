@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import * as esbuild from 'esbuild-wasm';
 
 function App() {
     const [input, setInput] = useState('');
@@ -8,6 +9,18 @@ function App() {
         console.log("click");
     };
 
+    const startService = async () => {
+        const service = await esbuild.startService({
+            worker: true,
+            wasmURL: './esbuild.wasm'
+        });
+        // console.log(service);
+    };
+
+    // Bs ek baar run kr na bhai
+    useEffect(() => {
+        startService();
+    }, []);
 
     return (
         <div>
