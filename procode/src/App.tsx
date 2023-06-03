@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import * as esbuild from 'esbuild-wasm'; // use * when exporting or importing everything from a file.
+import { unpkgPathPlugin } from './plugins/unpkg-plugin';
 
 function App() {
     const [input, setInput] = useState('');
@@ -15,7 +16,16 @@ function App() {
             loader: 'jsx',
             target: 'es2015'
         });
-        setCode(result.code);
+
+        const resultt = await ref.current.build({
+            entryPoints: ['index.js'],
+            bundle: true,
+            write: false,
+            plugins: [unpkgPathPlugin()]
+        })
+
+        console.log(resultt);
+        setCode(resultt.outputFiles[0].text);
     };
 
     const startService = async () => {
