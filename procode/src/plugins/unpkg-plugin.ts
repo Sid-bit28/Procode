@@ -39,10 +39,10 @@ export const unpkgPathPlugin = (inputCode: string) => {
                     };
                 }
                 // check if it is in indexDB
-                // const cachedResult = await fileCache.getItem<esbuild.OnLoadResult>(args.path);
-                // if (cachedResult) {
-                //     return cachedResult;
-                // }
+                const cachedResult = await fileCache.getItem<esbuild.OnLoadResult>(args.path);
+                if (cachedResult) {
+                    return cachedResult;
+                }
 
                 const response = await axios.get(args.path);
                 const escapedChar = response.data.replace(/\n/g, '').replace(/"/g, '\\"').replace(/'/g, "\\'");
