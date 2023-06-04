@@ -13,7 +13,6 @@ export const unpkgPathPlugin = (inputCode: string) => {
 
             // Resolve the file in esbuild https://esbuild.github.io/api/
             build.onResolve({ filter: /.*/ }, async (args: any) => {
-                console.log('onResolve', args);
                 if (args.path === 'index.js') {
                     return { path: args.path, namespace: 'a' };
                 }
@@ -31,7 +30,6 @@ export const unpkgPathPlugin = (inputCode: string) => {
 
             // Load the file on esbuild https://esbuild.github.io/api/
             build.onLoad({ filter: /.*/ }, async (args: any) => {
-                console.log('onLoad', args);
                 if (args.path === 'index.js') {
                     return {
                         loader: 'jsx',
