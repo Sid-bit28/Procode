@@ -4,7 +4,6 @@ import { unpkgPathPlugin } from './plugins/unpkg-plugin';
 
 function App() {
     const [input, setInput] = useState('');
-    const [code, setCode] = useState('');
     const ref = useRef<any>(); // for reference
     const iframe = useRef<any>();
 
@@ -12,6 +11,8 @@ function App() {
         if (!ref.current) {
             return;
         }
+
+        iframe.current.srdoc = html;
 
         const resultt = await ref.current.build({
             entryPoints: ['index.js'],
@@ -35,8 +36,13 @@ function App() {
             <div id="root"></div>
             <script>
                 window.addEventListener('message', (event) => {
-                // console.log(event.data);
-                eval(event.data);
+                    try{
+                        eval(event.data);
+                    } catch (err) {
+                        const root = document.querySelector('#root');
+                        root.innerHTML = '<div style="color: red;"><h4> RunTime Error </h4>' + err + '</div>'  
+                        console.error(err); 
+                    }
                 }, false);
             </script>
         </body>
@@ -60,9 +66,8 @@ function App() {
             <div>
                 <button onClick={handleClick}>Submit</button>
             </div>
-            <pre>{code}</pre>
             {/* testing iframes */}
-            <iframe ref={iframe} sandbox="allow-scripts" srcDoc={html} />
+            <iframe title='mdkd' ref={iframe} sandbox="allow-scripts" srcDoc={html} />
         </div>
     );
 }
