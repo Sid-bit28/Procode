@@ -30,9 +30,9 @@ function CodeEditor({ onChange }) {
     };
 
     return (
-        <div className='editor'>
+        <div className='editor-wrapper'>
             <button className="button button-format is-primary is-small" onClick={handleClick}>Format</button>
-            <MonacoEditor onMount={handleEditorDidMount} onChange={handleChange} defaultValue="// some comment" language='javascript' theme='vs-dark' height="500px" options={{ wordWrap: 'on', minimap: { enabled: false }, showUnused: false, folding: false, lineNumbersMinChars: 3, fontSize: 16, scrollBeyondLastLine: false, automaticLayout: true }} />
+            <MonacoEditor onMount={handleEditorDidMount} onChange={handleChange} defaultValue="// some comment" language='javascript' theme='vs-dark' height="100%" options={{ wordWrap: 'on', minimap: { enabled: false }, showUnused: false, folding: false, lineNumbersMinChars: 3, fontSize: 16, scrollBeyondLastLine: false, automaticLayout: true }} />
         </div>
     );
 };

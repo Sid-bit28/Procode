@@ -1,5 +1,5 @@
 import * as esbuild from 'esbuild-wasm'; // use * when exporting or importing everything from a file.
-import { unpkgPathPlugin } from '../plugins/unpkg-plugin';
+import { unpkgPathPlugin } from './plugins/unpkg-plugin';
 
 let service: esbuild.Service;
 const arrow = async (rawCode: string) => {
