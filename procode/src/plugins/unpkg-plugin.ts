@@ -39,18 +39,22 @@ export const unpkgPathPlugin = (inputCode: string) => {
                     };
                 }
                 // check if it is in indexDB
-                const cachedResult = await fileCache.getItem<esbuild.OnLoadResult>(args.path);
-                if (cachedResult) {
-                    return cachedResult;
-                }
-
-                // css fails to load!! https://esbuild.github.io/content-types/#css
-                const loader = args.path.match(/.css$/) ? 'css' : 'jsx';
+                // const cachedResult = await fileCache.getItem<esbuild.OnLoadResult>(args.path);
+                // if (cachedResult) {
+                //     return cachedResult;
+                // }
 
                 const response = await axios.get(args.path);
+                const escapedChar = response.data.replace(/\n/g, '').replace(/"/g, '\\"').replace(/'/g, "\\'");
+
+
+                // css fails to load!! https://esbuild.github.io/content-types/#css
+                const fileType = args.path.match(/.css$/) ? 'css' : 'jsx';
+                const contents = (fileType === 'css' ? `const style = document.createElement('style');style.innerText='${escapedChar}';document.head.appendChild(style);` : response.data);
+
                 const result: esbuild.OnLoadResult = {
-                    loader: loader,
-                    contents: response.data,
+                    loader: 'jsx',
+                    contents: contents,
                     resolveDir: new URL('./', response.request.responseURL).pathname
                 };
                 await fileCache.setItem(args.path, result);
