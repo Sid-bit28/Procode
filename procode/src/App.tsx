@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import * as esbuild from 'esbuild-wasm'; // use * when exporting or importing everything from a file.
 import { unpkgPathPlugin } from './plugins/unpkg-plugin';
+import CodeEditor from './components/code-editor';
 
 function App() {
     const [input, setInput] = useState('');
@@ -60,15 +61,20 @@ function App() {
         startService();
     }, []);
 
+    const handleChange = (value: string) => {
+        setInput(value);
+    };
+
     return (
         <div>
+            <CodeEditor onChange={handleChange} />
             <textarea onChange={e => setInput(e.target.value)} value={input}></textarea>
             <div>
                 <button onClick={handleClick}>Submit</button>
             </div>
             {/* testing iframes */}
             <iframe title='mdkd' ref={iframe} sandbox="allow-scripts" srcDoc={html} />
-        </div>
+        </div >
     );
 }
 
