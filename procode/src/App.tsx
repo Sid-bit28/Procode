@@ -27,12 +27,13 @@ function App() {
         setCode(resultt.outputFiles[0].text);
     };
 
+    const html = `<script> ${code} </script>`;
+
     const startService = async () => {
         ref.current = await esbuild.startService({
             worker: true,
             wasmURL: './esbuild.wasm'
         });
-        // console.log(service);
     };
 
     // Bs ek baar run krna hai
@@ -48,7 +49,7 @@ function App() {
             </div>
             <pre>{code}</pre>
             {/* testing iframes */}
-            <iframe src='/test.html'></iframe>
+            <iframe sandbox="allow-scripts" srcDoc={html} />
         </div>
     );
 }
