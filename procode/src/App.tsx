@@ -11,17 +11,12 @@ function App() {
         if (!ref.current) {
             return;
         }
-        // console.log(ref.current);
-        const result = await ref.current.transform(input, {
-            loader: 'jsx',
-            target: 'es2015'
-        });
 
         const resultt = await ref.current.build({
             entryPoints: ['index.js'],
             bundle: true,
             write: false,
-            plugins: [unpkgPathPlugin()],
+            plugins: [unpkgPathPlugin(input)],
             define: {
                 'process.env.NODE_ENV': '"production"',
                 global: 'window',
