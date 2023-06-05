@@ -4,7 +4,7 @@ import './text-editor.css';
 
 function TextEditor() {
     const ref = useRef(null);
-    const [value, setValue] = useState("**Hello world!!!**");
+    const [value, setValue] = useState("# Hello");
     const [editing, setEditing] = useState(false);
 
 
@@ -26,8 +26,9 @@ function TextEditor() {
             <MDEditor value={value} onChange={setValue} />
         </div>
     }
-    return <div data-color-mode="light" className='card' onClick={() => setEditing(true)}>
-        <div className="wmde-markdown-var">
+    return <div className='card' onClick={() => setEditing(true)}>
+        <div>
+            <div className="wmde-markdown-var"> </div>
             <MDEditor.Markdown source={value} style={{ whiteSpace: 'pre-wrap' }} />
         </div>
     </div>

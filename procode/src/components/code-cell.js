@@ -21,7 +21,7 @@ function CodeCell() {
     }, [input]);
 
 
-    const handleChange = (value: string) => {
+    const handleChange = (value) => {
         setInput(value);
     };
 

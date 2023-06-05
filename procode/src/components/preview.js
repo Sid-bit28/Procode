@@ -1,11 +1,6 @@
 import { useEffect, useRef } from 'react';
 import './preview.css';
 
-interface PreviewProps {
-    code: string;
-    status: string;
-}
-
 const html = `
     <html>
         <head>
@@ -37,8 +32,8 @@ const html = `
 
 
 
-function Preview({ code, status }: PreviewProps) {
-    const iframe = useRef<any>();
+function Preview({ code, status }) {
+    const iframe = useRef();
 
     // har baar jb jb "code" change hoga ek baar render hona chahiye
     useEffect(() => {
