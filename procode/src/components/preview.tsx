@@ -3,23 +3,32 @@ import './preview.css';
 
 interface PreviewProps {
     code: string;
+    status: string;
 }
 
 const html = `
     <html>
         <head>
-            <style> html{background-color:white; }
         </head>
         <body>
             <div id="root"></div>
             <script>
+                const handleError=(err)=>{
+                    const root = document.querySelector('#root');
+                    root.innerHTML = '<div style="color: red;"><h4> RunTime Error </h4>' + err + '</div>'  
+                    console.error(err); 
+                };
+                
+                window.addEventListener('error', (event)=>{
+                    event.preventDefault();
+                    handleError(event.error);
+                });
+                
                 window.addEventListener('message', (event) => {
                     try{
                         eval(event.data);
                     } catch (err) {
-                        const root = document.querySelector('#root');
-                        root.innerHTML = '<div style="color: red;"><h4> RunTime Error </h4>' + err + '</div>'  
-                        console.error(err); 
+                        handleError(err);
                     }
                 }, false);
             </script>
@@ -28,18 +37,21 @@ const html = `
 
 
 
-function Preview({ code }: PreviewProps) {
+function Preview({ code, status }: PreviewProps) {
     const iframe = useRef<any>();
 
     // har baar jb jb "code" change hoga ek baar render hona chahiye
     useEffect(() => {
         iframe.current.srdoc = html;
-        iframe.current.contentWindow.postMessage(code, '*');
+        setTimeout(() => {
+            iframe.current.contentWindow.postMessage(code, '*');
+        }, 50);
     }, [code]);
 
     return (
         <div className="preview-wrapper">
-            <iframe title='mdkd' ref={iframe} sandbox="allow-scripts" srcDoc={html} />
+            <iframe title='preview' ref={iframe} sandbox="allow-scripts" srcDoc={html} />
+            {status && <div className="preview-error">{status}</div>}
         </div>
     );
 }

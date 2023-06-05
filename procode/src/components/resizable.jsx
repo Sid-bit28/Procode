@@ -3,6 +3,7 @@ import './resizable.css';
 
 function Resizable({ direction, children }) {
     let resizableProps;
+
     if (direction === 'horizontal') {
         resizableProps = {
             className: 'resize-horizontal',
