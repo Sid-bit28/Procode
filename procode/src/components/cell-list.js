@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import CellListItem from "./cell-list-item";
 import AddCell from "./add-cell";
+import { Fragment } from "react";
 
 function CellList() {
     const cells = useSelector(({ cells: { loading, error, order, data } }) => {
@@ -12,10 +13,10 @@ function CellList() {
 
     const renderedCells = cells.map((cell) => {
         return (
-            <div key={cell.id}>
+            <Fragment key={cell.id}>
                 <AddCell nextCellId={cell.id} />
                 <CellListItem cell={cell} />
-            </div>
+            </Fragment>
         );
 
     });

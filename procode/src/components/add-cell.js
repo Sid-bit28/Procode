@@ -14,9 +14,22 @@ function AddCell({ nextCellId }) {
         console.log("clickedtext");
         dispatch(insertCellBefore({ nextCellId, type2 }));
     }
-    return <div>
-        <button onClick={handleClickCode}>Code</button>
-        <button onClick={handleClickText}>Text</button>
+    return <div className='add-cell'>
+        <div className="add-buttons">
+            <button className='button is-rounded is-primary is-small' onClick={handleClickCode}>
+                <span className='icon is-small'>
+                    <i className="fas fa-plus"></i>
+                </span>
+                <span>Code</span>
+            </button>
+            <button className='button is-rounded is-primary is-small' onClick={handleClickText}>
+                <span className='icon is-small'>
+                    <i className="fas fa-plus"></i>
+                </span>
+                <span>Text</span>
+            </button>
+        </div>
+        <div className="divider"></div>
     </div >
 }
 
