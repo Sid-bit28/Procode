@@ -7,11 +7,9 @@ function AddCell({ nextCellId }) {
     const type1 = "code";
     const type2 = "text";
     const handleClickCode = () => {
-        console.log("clickedcode");
         dispatch(insertCellBefore({ nextCellId, type1 }));
     }
     const handleClickText = () => {
-        console.log("clickedtext");
         dispatch(insertCellBefore({ nextCellId, type2 }));
     }
     return <div className='add-cell'>

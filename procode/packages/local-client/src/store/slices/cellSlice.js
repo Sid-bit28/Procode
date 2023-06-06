@@ -31,9 +31,9 @@ const cellSlice = createSlice({
             const id = nanoid();
             let content = '';
             if (action.payload.type1) {
-                content = "console.log(69);"
+                content = "console.log('Hello Welcome!')"
             } else {
-                content = "# Hello 69"
+                content = "# Hello Welcome!"
             }
             const newCell = {
                 id,

@@ -14,7 +14,6 @@ function CodeCell({ cell }) {
     const completeCode = useSelector((state) => {
         const { data, order } = state.cells;
         const orderedCells = order.map(id => data[id]);
-        // console.log(orderedCells);
         const completeCode = [];
         for (let c of orderedCells) {
             if (c.type === 'code') {
