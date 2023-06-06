@@ -2,15 +2,17 @@ import { useDispatch } from "react-redux";
 import { moveCell, deleteCell } from "../store";
 import './action-bar.css';
 
-function ActionBar(id) {
+function ActionBar({ id }) {
     const dispatch = useDispatch();
+    const up = "up";
+    const down = "down";
     return <div className="action-bar">
-        <button className="button is-primary is-small" onClick={() => dispatch(moveCell(id, 'up'))}>
+        <button className="button is-primary is-small" onClick={() => dispatch(moveCell({ id, down }))}>
             <span className="icon">
                 <i className="fas fa-arrow-down"></i>
             </span>
         </button>
-        <button className="button is-primary is-small" onClick={() => dispatch(moveCell(id, 'down'))}>
+        <button className="button is-primary is-small" onClick={() => dispatch(moveCell({ id, up }))}>
             <span className="icon">
                 <i className="fas fa-arrow-up"></i>
             </span>

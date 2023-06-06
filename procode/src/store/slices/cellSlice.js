@@ -12,8 +12,9 @@ const cellSlice = createSlice({
     reducers: {
         moveCell(state, action) {
             //assumption: action.payload = {id, direction}
-            const { direction } = action.payload;
-            const index = state.order.findIndex((id) => id === action.payload.id);
+            const idd = action.payload.id;
+            const direction = action.payload.up || action.payload.down;
+            const index = state.order.findIndex((id) => id === idd);
             const targetIndex = direction === 'up' ? index - 1 : index + 1;
             if (!(targetIndex < 0 || targetIndex > state.order.length - 1)) {
                 state.order[index] = state.order[targetIndex];
