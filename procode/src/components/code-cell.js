@@ -3,26 +3,29 @@ import bundle from '../bundler';
 import CodeEditor from './code-editor';
 import Preview from './preview';
 import Resizable from './resizable';
+import { useDispatch } from 'react-redux';
+import { updateCell } from '../store';
 
-function CodeCell() {
-    const [input, setInput] = useState('');
+function CodeCell({ cell }) {
+    const dispatch = useDispatch();
     const [code, setCode] = useState('');
     const [err, setErr] = useState('');
 
     useEffect(() => {
         const timer = setTimeout(async () => {
-            const output = await bundle(input);
+            const output = await bundle(cell.content);
             setCode(output.code);
             setErr(output.error);
         }, 1000);
         return () => {
             clearTimeout(timer);
         };
-    }, [input]);
+    }, [cell.content]);
 
 
     const handleChange = (value) => {
-        setInput(value);
+        const id = cell.id;
+        dispatch(updateCell({ id, value }));
     };
 
     return (

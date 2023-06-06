@@ -1,4 +1,3 @@
-import * as esbuild from 'esbuild-wasm';
 import axios from 'axios';
 import localforage from 'localforage';
 
@@ -6,13 +5,13 @@ const fileCache = localforage.createInstance({
     name: 'filecache',
 });
 
-export const unpkgPathPlugin = (inputCode: string) => {
+export const unpkgPathPlugin = (inputCode) => {
     return {
         name: 'unpkg-path-plugin',
-        setup(build: esbuild.PluginBuild) {
+        setup(build) {
 
             // Resolve the file in esbuild https://esbuild.github.io/api/
-            build.onResolve({ filter: /.*/ }, async (args: any) => {
+            build.onResolve({ filter: /.*/ }, async (args) => {
                 if (args.path === 'index.js') {
                     return { path: args.path, namespace: 'a' };
                 }
@@ -29,7 +28,7 @@ export const unpkgPathPlugin = (inputCode: string) => {
             });
 
             // Load the file on esbuild https://esbuild.github.io/api/
-            build.onLoad({ filter: /.*/ }, async (args: any) => {
+            build.onLoad({ filter: /.*/ }, async (args) => {
                 if (args.path === 'index.js') {
                     return {
                         loader: 'jsx',
@@ -37,7 +36,7 @@ export const unpkgPathPlugin = (inputCode: string) => {
                     };
                 }
                 // check if it is in indexDB
-                const cachedResult = await fileCache.getItem<esbuild.OnLoadResult>(args.path);
+                const cachedResult = await fileCache.getItem(args.path);
                 if (cachedResult) {
                     return cachedResult;
                 }
@@ -50,7 +49,7 @@ export const unpkgPathPlugin = (inputCode: string) => {
                 const fileType = args.path.match(/.css$/) ? 'css' : 'jsx';
                 const contents = (fileType === 'css' ? `const style = document.createElement('style');style.innerText='${escapedChar}';document.head.appendChild(style);` : response.data);
 
-                const result: esbuild.OnLoadResult = {
+                const result = {
                     loader: 'jsx',
                     contents: contents,
                     resolveDir: new URL('./', response.request.responseURL).pathname

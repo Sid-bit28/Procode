@@ -1,20 +1,29 @@
 import { useSelector } from "react-redux";
 import CellListItem from "./cell-list-item";
+import AddCell from "./add-cell";
 
 function CellList() {
-    let cells;
-    useSelector((state) => {
-        cells = state.cells.order.map((id) => {
-            return state.cells.data[id];
+    const cells = useSelector(({ cells: { loading, error, order, data } }) => {
+        const ok = order.map((id) => {
+            return data[id];
         });
+        return ok;
     });
-    console.log(cells);
 
     const renderedCells = cells.map((cell) => {
-        return <CellListItem key={cell.id} cell={cell} />
-    })
+        return (
+            <div key={cell.id}>
+                <AddCell nextCellId={cell.id} />
+                <CellListItem cell={cell} />
+            </div>
+        );
+
+    });
     return (
-        <div>{renderedCells}</div>
+        <div>
+            {renderedCells}
+            <AddCell nextCellId={null} />
+        </div>
     );
 }
 

@@ -26,11 +26,18 @@ const cellSlice = createSlice({
             state.order = state.order.filter(id => id !== action.payload);
         },
         insertCellBefore(state, action) {
-            //assumption: action.payload = {type}
+            //assumption: action.payload = {id, type}
+            const id = nanoid();
+            let content = '';
+            if (action.payload.type1) {
+                content = "console.log(69);"
+            } else {
+                content = "# Hello 69"
+            }
             const newCell = {
-                content: '',
-                type: action.payload,
-                id: nanoid()
+                id,
+                content,
+                type: action.payload.type1 || action.payload.type2
             };
             state.data[newCell.id] = newCell;
             const index = state.order.findIndex((id) => id === action.payload.id);
@@ -42,8 +49,8 @@ const cellSlice = createSlice({
         },
         updateCell(state, action) {
             //assumption: action.payload = {id, content}
-            const { id, content } = action.payload;
-            state.data[id].content = content;
+            const { id, value } = action.payload;
+            state.data[id].content = value;
         }
     },
 });
