@@ -26,9 +26,8 @@ function TextEditor({ cell }) {
     }, []);
 
     const handleChange = (event) => {
-        const val = event | "";
-        console.log(event);
-        dispatch(updateCell({ id, val }));
+        const value = event;
+        dispatch(updateCell({ id, value }));
     }
     if (editing) {
         return <div ref={ref}>
