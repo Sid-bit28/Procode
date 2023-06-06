@@ -34,9 +34,8 @@ function TextEditor({ cell }) {
             <MDEditor value={cell.content} onChange={handleChange} />
         </div>
     }
-    return <div className='card' onClick={() => setEditing(true)}>
-        <div>
-            <div className="wmde-markdown-var"> </div>
+    return <div className='card text-editor' onClick={() => setEditing(true)}>
+        <div className="card-content">
             <MDEditor.Markdown source={cell.content || "# Random"} style={{ whiteSpace: 'pre-wrap' }} />
         </div>
     </div>

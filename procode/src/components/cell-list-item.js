@@ -15,9 +15,7 @@ function CellListItem({ cell }) {
     } else {
         child = <>
             <TextEditor cell={cell} />
-            <div className="action-bar-wrapper">
-                <ActionBar id={cell.id} />
-            </div>
+            <ActionBar id={cell.id} />
         </>
     }
     return (

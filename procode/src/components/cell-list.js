@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import CellListItem from "./cell-list-item";
 import AddCell from "./add-cell";
 import { Fragment } from "react";
+import './cell-list.css'
 
 function CellList() {
     const cells = useSelector(({ cells: { loading, error, order, data } }) => {
@@ -21,9 +22,11 @@ function CellList() {
 
     });
     return (
-        <div>
+        <div className="cell-list">
             {renderedCells}
-            <AddCell nextCellId={null} />
+            <div className={cells.length === 0 ? "force-vis" : ''}>
+                <AddCell nextCellId={null} />
+            </div>
         </div>
     );
 }
