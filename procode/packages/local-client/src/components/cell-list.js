@@ -1,11 +1,11 @@
 import { useSelector } from "react-redux";
 import CellListItem from "./cell-list-item";
 import AddCell from "./add-cell";
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import './cell-list.css'
 
 function CellList() {
-    const cells = useSelector(({ cells: { loading, error, order, data } }) => {
+    const cells = useSelector(({ cells: { order, data } }) => {
         const ok = order.map((id) => {
             return data[id];
         });
