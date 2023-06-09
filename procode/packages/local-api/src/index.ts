@@ -1,25 +1,33 @@
 import express from "express";
+import path from "path";
 import { createProxyMiddleware } from "http-proxy-middleware";
-import path from 'path';
-import { createCellsRounter } from "./routes/cells";
+import { createCellsRouter } from "./routes/cells";
 
-export const serve = (port: number, filename: string, dir: string, useProxy: boolean) => {
+export const serve = (
+    port: number,
+    filename: string,
+    dir: string,
+    useproxy: boolean
+) => {
     const app = express();
 
-
-    if (useProxy) {
-        app.use(createProxyMiddleware({
-            target: 'http://127.0.0.1:3000',
-            ws: true,
-            logLevel: 'silent'
-        }));
+    app.use(createCellsRouter(filename, dir));
+    if (useproxy) {
+        app.use(
+            createProxyMiddleware({
+                target: `http://127.0.0.1:3000`,
+                ws: true,
+                logLevel: "silent",
+            })
+        );
     } else {
-        const packagePath = require.resolve('@procode_notebook/local-client/build/index.html');
+        const packagePath = require.resolve(
+            "@pro_coder_notebook/local-client/build/index.html"
+        );
         app.use(express.static(path.dirname(packagePath)));
     }
 
-    app.use(createCellsRounter(filename, dir));
-    return new Promise<void>((resolve, reject) => {
-        app.listen(port, resolve).on('error', reject);
+    return new Promise<any>((resolve: any, reject) => {
+        app.listen(port, resolve).on("error", reject);
     });
 };

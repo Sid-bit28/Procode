@@ -1,28 +1,46 @@
-import { useDispatch } from "react-redux";
-import { moveCell, deleteCell } from "../store";
-import './action-bar.css';
+import "./action-bar.css";
+import { useContext } from "react";
+import cellContext from "../context/cellContext";
 
 function ActionBar({ id }) {
-    const dispatch = useDispatch();
-    const up = "up";
-    const down = "down";
-    return <div className="action-bar">
-        <button className="button is-primary is-small" onClick={() => dispatch(moveCell({ id, down }))}>
-            <span className="icon">
-                <i className="fas fa-arrow-down"></i>
-            </span>
-        </button>
-        <button className="button is-primary is-small" onClick={() => dispatch(moveCell({ id, up }))}>
-            <span className="icon">
-                <i className="fas fa-arrow-up"></i>
-            </span>
-        </button>
-        <button className="button is-primary is-small" onClick={() => dispatch(deleteCell(id))}>
-            <span className="icon">
-                <i className="fas fa-times"></i>
-            </span>
-        </button>
-    </div>
+    const { moveCell, deleteCell } = useContext(cellContext);
+    const handleClickDown = () => {
+        moveCell(id, "down");
+    };
+    const handleClickUp = () => {
+        moveCell(id, "up");
+    };
+    const handleClickDelete = () => {
+        deleteCell(id);
+    };
+    return (
+        <div className="action-bar">
+            <button
+                className="button is-primary is-small"
+                onClick={handleClickDown}
+            >
+                <span className="icon">
+                    <i className="fas fa-arrow-down"></i>
+                </span>
+            </button>
+            <button
+                className="button is-primary is-small"
+                onClick={handleClickUp}
+            >
+                <span className="icon">
+                    <i className="fas fa-arrow-up"></i>
+                </span>
+            </button>
+            <button
+                className="button is-primary is-small"
+                onClick={handleClickDelete}
+            >
+                <span className="icon">
+                    <i className="fas fa-times"></i>
+                </span>
+            </button>
+        </div>
+    );
 }
 
 export default ActionBar;

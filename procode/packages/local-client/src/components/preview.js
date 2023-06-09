@@ -1,5 +1,5 @@
-import { useEffect, useRef } from 'react';
-import './preview.css';
+import { useEffect, useRef } from "react";
+import "./preview.css";
 
 const html = `
     <html>
@@ -30,8 +30,6 @@ const html = `
         </body>
     </html>`;
 
-
-
 function Preview({ code, status }) {
     const iframe = useRef();
 
@@ -39,13 +37,18 @@ function Preview({ code, status }) {
     useEffect(() => {
         iframe.current.srdoc = html;
         setTimeout(() => {
-            iframe.current.contentWindow.postMessage(code, '*');
+            iframe.current.contentWindow.postMessage(code, "*");
         }, 50);
     }, [code]);
 
     return (
         <div className="preview-wrapper">
-            <iframe title='preview' ref={iframe} sandbox="allow-scripts" srcDoc={html} />
+            <iframe
+                title="preview"
+                ref={iframe}
+                sandbox="allow-scripts"
+                srcDoc={html}
+            />
             {status && <div className="preview-error">{status}</div>}
         </div>
     );

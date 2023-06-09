@@ -14,25 +14,25 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.serveCommand = void 0;
 const commander_1 = require("commander");
-const local_api_1 = require("@procode_notebook/local-api");
+const local_api_1 = require("@pro_coder_notebook/local-api");
 const path_1 = __importDefault(require("path"));
-const isProduction = process.env.NODE_ENV === 'production';
+const isproduction = process.env.production === "production";
 exports.serveCommand = new commander_1.Command()
-    .command('serve [filename]')
-    .description('Open a file for editing.')
-    .option('-p, --port <number>', 'port to run server on', '4005')
-    .action((filename = 'MyNoteBook.js', options) => __awaiter(void 0, void 0, void 0, function* () {
+    .command("serve [filename]")
+    .description("Open a file for editing")
+    .option("-p, --port <number>", "port to run server on", "4005")
+    .action((filename = "MyBook.js", options) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const dir = path_1.default.join(process.cwd(), path_1.default.dirname(filename));
-        yield (0, local_api_1.serve)(parseInt(options.port), path_1.default.basename(filename), dir, !isProduction);
-        console.log(`Welcome User.Please navigate to http://localhost:${options.port} to edit the file.`);
+        yield (0, local_api_1.serve)(parseInt(options.port), path_1.default.basename(filename), dir, !isproduction);
+        console.log(`Welcome User, Please Navigate to http://localhost:${options.port}`);
     }
     catch (err) {
         if (err.code === "EADDRINUSE") {
-            console.log('Port is in use. Try running it in other port.');
+            console.log("Port is already in use. Please try again with a different port");
         }
         else {
-            console.log(err);
+            console.log("Here is the error", err.message);
         }
         process.exit(1);
     }

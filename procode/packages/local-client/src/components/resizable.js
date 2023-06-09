@@ -1,17 +1,17 @@
 import { ResizableBox } from "react-resizable";
-import './resizable.css';
+import "./resizable.css";
 
 function Resizable({ direction, children }) {
     let resizableProps;
 
-    if (direction === 'horizontal') {
+    if (direction === "horizontal") {
         resizableProps = {
-            className: 'resize-horizontal',
+            className: "resize-horizontal",
             minConstraints: [window.innerWidth * 0.2, Infinity],
             maxConstraints: [window.innerWidth * 0.75, Infinity],
             height: Infinity,
             width: window.innerWidth * 0.75,
-            resizeHandles: ['e'],
+            resizeHandles: ["e"],
         };
     } else {
         resizableProps = {
@@ -19,14 +19,10 @@ function Resizable({ direction, children }) {
             maxConstraints: [Infinity, window.innerHeight * 0.9],
             height: 300,
             width: Infinity,
-            resizeHandles: ['s'],
+            resizeHandles: ["s"],
         };
     }
-    return (
-        <ResizableBox {...resizableProps}>
-            {children}
-        </ResizableBox>
-    );
+    return <ResizableBox {...resizableProps}>{children}</ResizableBox>;
 }
 
 export default Resizable;

@@ -1,29 +1,30 @@
 {
-  "name": "procode_notebook",
-  "version": "2.0.0",
-  "description": "",
-  "bin": "dist/index.js",
-  "publishConfig": {
-    "access": "public"
-  },
-  "files": [
-    "dist"
-  ],
-  "scripts": {
-    "start": "tsc --watch --preserveWatchOutput",
-    "prepublishOnly": "esbuild src/index.ts --platform=node --outfile=dist/index.js --bundle --minify --define:process.env.NODE_ENV=\\\"production\\\""
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "@procode_notebook/local-client": "^2.0.0"
-  },
-  "devDependencies": {
-    "@procode_notebook/local-api": "^2.0.0",
-    "@types/node": "^20.2.5",
-    "commander": "^10.0.1",
-    "esbuild": "^0.17.19",
-    "typescript": "^5.1.3"
-  }
+    "name": "pro_coder_notebook",
+    "version": "3.0.0",
+    "description": "",
+    "files": [
+        "dist"
+    ],
+    "publishConfig": {
+        "access": "public"
+    },
+    "bin": "dist/index.js",
+    "scripts": {
+        "start": "tsc --watch --preserveWatchOutput",
+        "prepublishOnly": "esbuild src/index.ts --platform=node --outfile=dist/index.js --bundle --minify --define:process.env.NODE_ENV=\\\"production\\\""
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "@pro_coder_notebook/local-api": "^3.0.0",
+        "@types/node": "^20.2.5",
+        "commander": "^10.0.1",
+        "esbuild": "^0.17.19",
+        "typescript": "^5.1.3"
+    },
+    "dependencies": {
+        "@pro_coder_notebook/local-client": "^3.0.0"
+    },
+    "gitHead": "29f9b6369839073a08f2b3b09ca63096a8e9d015"
 }

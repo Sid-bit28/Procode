@@ -12,36 +12,34 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createCellsRounter = void 0;
+exports.createCellsRouter = void 0;
 const express_1 = __importDefault(require("express"));
 const promises_1 = __importDefault(require("fs/promises"));
 const path_1 = __importDefault(require("path"));
-const createCellsRounter = (filename, dir) => {
+const createCellsRouter = (filename, dir) => {
     const router = express_1.default.Router();
-    router.use(express_1.default.json);
+    router.use(express_1.default.json());
     const fullPath = path_1.default.join(dir, filename);
-    router.get('/cells', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    router.get("/cells", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            const result = yield promises_1.default.readFile(fullPath, { encoding: 'utf-8' });
+            const result = yield promises_1.default.readFile(fullPath, { encoding: "utf8" });
             res.send(JSON.parse(result));
         }
         catch (err) {
-            if (err.code === 'ENOENT') {
-                yield promises_1.default.writeFile(fullPath, '[]', 'utf-8');
+            if (err.code === "ENOENT") {
+                yield promises_1.default.writeFile(fullPath, "[]", "utf-8");
                 res.send([]);
             }
             else {
                 throw err;
             }
         }
-        // bug : file exist maybe na kre
-        // stackoverflow solution:
     }));
-    router.post('/cells', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    router.post("/cells", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const { cells } = req.body;
-        yield promises_1.default.writeFile(fullPath, JSON.stringify(cells), 'utf-8');
-        res.send({ status: "ok" });
+        yield promises_1.default.writeFile(fullPath, JSON.stringify(cells), "utf-8");
+        res.send({ status: 200 });
     }));
     return router;
 };
-exports.createCellsRounter = createCellsRounter;
+exports.createCellsRouter = createCellsRouter;

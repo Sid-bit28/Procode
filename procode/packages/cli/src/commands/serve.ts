@@ -1,24 +1,32 @@
 import { Command } from "commander";
-import { serve } from "@procode_notebook/local-api";
+import { serve } from "@pro_coder_notebook/local-api";
 import path from "path";
 
-const isProduction = process.env.NODE_ENV === 'production';
+const isproduction = process.env.NODE_ENV === "production";
+
 export const serveCommand = new Command()
-    .command('serve [filename]')
-    .description('Open a file for editing.')
-    .option('-p, --port <number>', 'port to run server on', '4005')
-    .action(async (filename = 'MyNoteBook.js', options: { port: string }) => {
+    .command("serve [filename]")
+    .description("Open a file for editing")
+    .option("-p, --port <number>", "port to run server on", "4005")
+    .action(async (filename = "MyBook.js", options: { port: string }) => {
         try {
             const dir = path.join(process.cwd(), path.dirname(filename));
-            await serve(parseInt(options.port), path.basename(filename), dir, !isProduction);
+            await serve(
+                parseInt(options.port),
+                path.basename(filename),
+                dir,
+                !isproduction
+            );
             console.log(
-                `Welcome User.Please navigate to http://localhost:${options.port} to edit the file.`
-            )
+                `Welcome User, Please Navigate to http://localhost:${options.port}`
+            );
         } catch (err: any) {
             if (err.code === "EADDRINUSE") {
-                console.log('Port is in use. Try running it in other port.');
+                console.log(
+                    "Port is already in use. Please try again with a different port"
+                );
             } else {
-                console.log(err);
+                console.log("Here is the error", err.message);
             }
             process.exit(1);
         }

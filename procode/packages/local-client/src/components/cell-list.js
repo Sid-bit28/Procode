@@ -1,31 +1,30 @@
-import { useSelector } from "react-redux";
+import { useContext } from "react";
+import cellContext from "../context/cellContext";
 import CellListItem from "./cell-list-item";
 import AddCell from "./add-cell";
-import { Fragment, useEffect } from "react";
-import './cell-list.css'
+import { Fragment } from "react";
+import "./cell-list.css";
 
 function CellList() {
-    const cells = useSelector(({ cells: { order, data } }) => {
-        const ok = order.map((id) => {
-            return data[id];
-        });
-        return ok;
+    const { order, data } = useContext(cellContext);
+
+    const cells = order.map((id) => {
+        return data[id];
     });
 
     const renderedCells = cells.map((cell) => {
         return (
             <Fragment key={cell.id}>
-                <AddCell nextCellId={cell.id} />
+                <AddCell />
                 <CellListItem cell={cell} />
             </Fragment>
         );
-
     });
     return (
         <div className="cell-list">
             {renderedCells}
-            <div className={cells.length === 0 ? "force-vis" : ''}>
-                <AddCell nextCellId={null} />
+            <div className={cells.length === 0 ? "force-vis" : ""}>
+                <AddCell />
             </div>
         </div>
     );

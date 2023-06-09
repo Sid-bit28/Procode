@@ -1,37 +1,36 @@
-import axios from 'axios';
-import localforage from 'localforage';
+import axios from "axios";
+import localforage from "localforage";
 
 const fileCache = localforage.createInstance({
-    name: 'filecache',
+    name: "filecache",
 });
 
 export const unpkgPathPlugin = (inputCode) => {
     return {
-        name: 'unpkg-path-plugin',
+        name: "unpkg-path-plugin",
         setup(build) {
-
             // Resolve the file in esbuild https://esbuild.github.io/api/
             build.onResolve({ filter: /.*/ }, async (args) => {
-                if (args.path === 'index.js') {
-                    return { path: args.path, namespace: 'a' };
+                if (args.path === "index.js") {
+                    return { path: args.path, namespace: "a" };
                 }
-                if (args.path.includes('./') || args.path.includes('../')) {
+                if (args.path.includes("./") || args.path.includes("../")) {
                     return {
-                        namespace: 'a',
-                        path: new URL(args.path, 'https://unpkg.com' + args.resolveDir + '/').href
+                        namespace: "a",
+                        path: new URL(args.path, "https://unpkg.com" + args.resolveDir + "/").href,
                     };
                 }
                 return {
-                    namespace: 'a',
-                    path: `https://unpkg.com/${args.path}`
-                }
+                    namespace: "a",
+                    path: `https://unpkg.com/${args.path}`,
+                };
             });
 
             // Load the file on esbuild https://esbuild.github.io/api/
             build.onLoad({ filter: /.*/ }, async (args) => {
-                if (args.path === 'index.js') {
+                if (args.path === "index.js") {
                     return {
-                        loader: 'jsx',
+                        loader: "jsx",
                         contents: inputCode,
                     };
                 }
@@ -42,17 +41,22 @@ export const unpkgPathPlugin = (inputCode) => {
                 }
 
                 const response = await axios.get(args.path);
-                const escapedChar = response.data.replace(/\n/g, '').replace(/"/g, '\\"').replace(/'/g, "\\'");
-
+                const escapedChar = response.data
+                    .replace(/\n/g, "")
+                    .replace(/"/g, '\\"')
+                    .replace(/'/g, "\\'");
 
                 // css fails to load!! https://esbuild.github.io/content-types/#css
-                const fileType = args.path.match(/.css$/) ? 'css' : 'jsx';
-                const contents = (fileType === 'css' ? `const style = document.createElement('style');style.innerText='${escapedChar}';document.head.appendChild(style);` : response.data);
+                const fileType = args.path.match(/.css$/) ? "css" : "jsx";
+                const contents =
+                    fileType === "css"
+                        ? `const style = document.createElement('style');style.innerText='${escapedChar}';document.head.appendChild(style);`
+                        : response.data;
 
                 const result = {
-                    loader: 'jsx',
+                    loader: "jsx",
                     contents: contents,
-                    resolveDir: new URL('./', response.request.responseURL).pathname
+                    resolveDir: new URL("./", response.request.responseURL).pathname,
                 };
                 await fileCache.setItem(args.path, result);
                 return result;
