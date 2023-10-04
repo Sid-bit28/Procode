@@ -1,9 +1,9 @@
-import "bulmaswatch/superhero/bulmaswatch.min.css";
-import "@fortawesome/fontawesome-free/css/all.min.css";
-import CellList from "./components/cell-list";
-import { useEffect, useContext } from "react";
-import * as esbuild from "esbuild-wasm";
-import cellContext from "./context/cellContext";
+import 'bulmaswatch/superhero/bulmaswatch.min.css';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import CellList from './components/cell-list';
+import { useEffect, useContext } from 'react';
+import * as esbuild from 'esbuild-wasm';
+import cellContext from './context/cellContext';
 
 function App() {
     const { fetchCells, postCells } = useContext(cellContext);
@@ -11,7 +11,7 @@ function App() {
     useEffect(() => {
         esbuild.initialize({
             worker: true,
-            wasmURL: "./esbuild.wasm",
+            wasmURL: './esbuild.wasm',
         });
     }, []);
 
